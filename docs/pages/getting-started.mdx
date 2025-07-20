@@ -1,0 +1,60 @@
+# Get started
+
+This page will walk you through the process of using Luke Flow Diagram in your project with few steps.
+
+::::steps
+
+## Create a project
+First, create a flutter project.
+:::warning 
+You don't need to create a new one if you already have one
+:::
+
+## Install Luke Flow Diagram
+You can install luke flow diagram with the following command:
+```bash [Terminal]
+flutter pub add luke_flow_diagram
+```
+
+Or by updating your `pubspec.yml` with...
+```yaml
+dependencies:
+  luke_flow_diagram: <version-number>
+```
+
+## Usage
+Now you just need to import the package and create a Flow Canvas with a `nodeBuilder`
+```dart
+import 'package:luke_flow_diagram/luke_flow_diagram.dart'; // [!code ++]
+
+class MyFlowCanvas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = LukeFlowCanvasController<DataModelExample>();
+
+    return LukeFlowCanvas<DataModelExample>(
+        controller: controller,
+        nodes: nodes,
+        initialConnections: connections,
+        nodeBuilder: (node) {
+            //Create your custom nodes widget here
+            return Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: node.data?.color ?? Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                    child: Text(
+                        node.data?.name ?? 'Node',
+                        style: TextStyle(color: Colors.black),
+                    ),
+                ),
+            );
+        }
+    );
+  }
+}
+```
+
+::::
