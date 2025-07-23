@@ -17,15 +17,15 @@ export default defineConfig({
           link: '/core-concepts/overview',
         },
         {
-          text: 'Building a flow',
+          text: 'TODO: Building a flow',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'The Viewport',
+          text: 'TODO: The Viewport',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'Built-In Components',
+          text: 'TODO: Built-In Components',
           link: '/core-concepts/building-a-flow',
         },
       ],
@@ -35,19 +35,19 @@ export default defineConfig({
       collapsed: false,
       items: [
         {
-          text: 'Nodes',
+          text: 'TODO: Nodes',
           link: '/core-concepts/overview',
         },
         {
-          text: 'Sockets',
+          text: 'TODO: Sockets',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'Connections',
+          text: 'TODO: Connections',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'Background Grid',
+          text: 'TODO: Background Grid',
           link: '/core-concepts/building-a-flow',
         },
       ],
@@ -57,26 +57,30 @@ export default defineConfig({
       collapsed: false,
       items: [
         {
-          text: 'Slideshow App',
+          text: 'TODO: Slideshow App',
           link: '/core-concepts/overview',
         },
         {
-          text: 'Readonly',
+          text: 'TODO: Readonly',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'Vertical Flow',
+          text: 'TODO: Vertical Flow',
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'Reroute',
+          text: 'TODO: Reroute',
           link: '/core-concepts/building-a-flow',
         },
       ],
     },
     {
-      text: 'API Reference',
+      text: 'TODO: API Reference',
       link: '/api-reference',
+    },
+    {
+      text: 'Demo',
+      link: '/demo',
     },
   ],
 })

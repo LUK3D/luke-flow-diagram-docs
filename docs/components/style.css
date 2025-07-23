@@ -1,0 +1,12 @@
+.demo {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 400px;
+}
+
+.demo iframe {
+    width: 100%;
+    height: 100%;
+}
