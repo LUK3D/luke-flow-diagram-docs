@@ -17,7 +17,7 @@ export default defineConfig({
           link: '/core-concepts/overview',
         },
         {
-          text: 'TODO: Building a flow',
+          text: 'Building a flow',
           link: '/core-concepts/building-a-flow',
         },
         {

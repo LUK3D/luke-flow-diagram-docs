@@ -1,0 +1,217 @@
+import Demo from '../../components/demo';
+
+# Building a Flow
+
+I this section, you will learn how easy and simple is to build your first flow diagrams with Luke Flow Diagram.
+This will help you understand the core concepts of the library.
+
+To get started, install the library on your project:
+```bash [Terminal]
+flutter pub add luke_flow_diagram
+```
+
+## Ceating the flow
+Lets start by creating a Canvas:
+
+::::steps
+### Add imports
+
+First we need to make sure that we have the `luke_flow_diagram` is installed.
+After that, you can import the package into you project
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+```
+### Creating a controller
+
+Luke Flow Canvas requires a controller. To create one, you can use `LukeFlowCanvasController` class.
+
+```bash 
+final controller = LukeFlowCanvasController();
+```
+
+### Render LukeFlow
+
+Now that we have the package imported on our project, we can use `LukeFlowCanvas` to create a space to render our flow.
+
+ ```dart
+Widget build(BuildContext context) {
+    return LukeFlowCanvas(
+        nodeBuilder: (node) {
+            return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.black,
+                child: Padding(
+                padding: EdgeInsetsGeometry.all(10),
+                child: Row(
+                    children: [
+                        Text(
+                            "This is a node",
+                            style: TextStyle(color: Colors.white),
+                        ),
+                    ],
+                ),
+                ),
+            ));
+        },
+        controller: controller,
+    )
+}
+ ```
+### Empty flow
+
+Congrats! You now you should have a blank canvas 🎉
+
+:::code-group
+ 
+<div data-title="Preview">
+  <Demo url='/empty' />
+</div>
+ 
+```dart [</>]
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+
+class EmptyCanvas extends StatelessWidget {
+  const EmptyCanvas({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = LukeFlowCanvasController();
+    return LukeFlowCanvas(
+      nodes: [],
+      nodeBuilder: (node) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.black,
+            child: Padding(
+              padding: EdgeInsetsGeometry.all(10),
+              child: Row(
+                children: [
+                  Text("This is a node", style: TextStyle(color: Colors.white)),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+      controller: controller,
+    );
+  }
+}
+```
+:::
+
+::::
+
+## Adding Nodes
+Now that we have a blank canvas, we can start adding nodes to it.
+Nodes are the basic building blocks of your flow diagram. They can represent any entity or concept you want to visualize.
+
+::::steps
+### dd nodes to the flow
+To add a node you can simply call the `addNodes` method on the controller and pass a list of `NodeModel` objects.
+
+```dart
+controller.addNodes([
+    NodeModel(),
+    NodeModel(
+        // You can also set the initial position of the node
+        position: Vector2.fromOffset(centerPosition).add(Vector2(100, -120)),
+    ),
+]);
+```
+
+### Flow with nodes
+Here is a full example of how to add nodes to the flow.
+For this example, we will make our Component a StatefulWidget so we can add the node from the init state.  
+
+:::code-group
+
+<div data-title="Preview">
+  <Demo url='/adding-nodes' />
+</div>
+
+```dart [</>]
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+
+class AddingNodes extends StatefulWidget {
+  const AddingNodes({super.key});
+  @override
+  State<AddingNodes> createState() => _AddingNodesState();
+}
+
+class _AddingNodesState extends State<AddingNodes> {
+  final controller = LukeFlowCanvasController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Add nodes after a delay to simulate loading // [!code hl]
+    Future.delayed(Duration(seconds: 1), () { // [!code hl]
+      addNode();
+    });
+  }
+
+  void addNode() {
+    final centerPosition = controller.viewController.viewportCenter; // [!code hl]
+    if (centerPosition != null) { // [!code hl]
+      controller.addNodes([ // [!code hl]
+        NodeModel(position: Vector2.fromOffset(centerPosition)), // [!code hl]
+        NodeModel( // [!code hl]
+          position: Vector2.fromOffset(centerPosition).add(Vector2(100, -120)), // [!code hl]
+        ), // [!code hl]
+      ]); // [!code hl]
+      controller.viewController.center(); // [!code hl]
+    } // [!code hl]
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: LukeFlowCanvas(
+        controller: controller,
+        nodeBuilder: (node) {
+
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(15),
+                child: Column(
+                  children: [
+                    Text(
+                      "🤓",
+                      style: TextStyle(color: Colors.white, fontSize: 40),
+                    ),
+                    Text(
+                      "This is a node",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+:::
+
+
+::::warning[Note]
+The preview on this page uses a flutter web app inside an iframe. 
+
+::::

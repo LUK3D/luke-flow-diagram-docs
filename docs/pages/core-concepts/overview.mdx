@@ -1,16 +1,21 @@
 # Overview
-Luke Flow Diagram is a library that helps you create beatifull and interactive visual flow diagrams for your flutter application.
+Luke Flow Diagram is a Flutter library that allows you to build beautiful and interactive visual flow diagrams for your applications.
 
-A Flow Diagram has multiple components: LukeFlowCanvasController, LukeFlowCanvas, Nodes, Sockets and Connections.
+A flow diagram consists of several components: 
+- `LukeFlowCanvasController`
+- `LukeFlowCanvas`
+- `Nodes`
+- `Sockets`
+- `Connections`
 
 ## LukeFlowCanvasController
-This is a controller that allows you to programatically interact with you FlowCanvas with all the other components.
-You can use it the acces the state of the diagram or execute commands that will update the diagrams internal data.
+The `LukeFlowCanvasController` enables programmatic interaction with the `LukeFlowCanvas` and all its related components.
+You can use it to access the current state of the diagram or to execute commands that update the internal data of the diagram.
 
 ```dart
 final controller = LukeFlowCanvasController<YourDataType>();
 ```
-After creating an instance of a controller, you need to bind it on the Canvas like this:
+Once you’ve created a controller instance, bind it to the canvas as shown below:
 
 ```dart
 import 'package:luke_flow_diagram/luke_flow_diagram.dart';
@@ -30,10 +35,46 @@ class MyFlowCanvas extends StatelessWidget {
 ```
 
 ## LukeFlowCanvas
-This is a widget where the diagram is rendered with all its components.
+This widget renders all the visual elements of your diagram, including nodes, connections, and other UI components.
+
+```dart
+// Basic Luke Flow Canvas example // [!code focus] 
+LukeFlowCanvas( // [!code focus] 
+  controller: controller, // [!code focus] 
+  nodeBuilder: (node) { // [!code focus] 
+    //Here you can render any widget that will be displayed as a node // [!code focus]
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.black,
+        child: Padding(
+          padding: EdgeInsetsGeometry.all(10),
+          child: Row(
+            children: [
+              Text(
+                "This is a node",
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }, // [!code focus] 
+) // [!code focus] 
+
+```
 
 ## Nodes
 
+Luke Flow Diagram is highly flexible and customizable. You can define your nodes using any widget via the `nodeBuilder` property on `LukeFlowCanvas`.
+We also provide example nodes to help you get started quickly.
+
 ## Sockets
+A Socket (also known as a port) is a point on a node where connections can attach.
+You can fully customize the appearance and positioning of sockets using the `socketBuilder` property on `LukeFlowCanvas`.
 
 ## Connection Edges
+Connection edges are the lines that link one node to another (or even to itself), defining the flow of data in your diagram.
+You can use the built-in customizable edges provided by Luke Flow Diagram, or you can implement your own.
