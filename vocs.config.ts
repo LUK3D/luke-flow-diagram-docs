@@ -21,8 +21,8 @@ export default defineConfig({
           link: '/core-concepts/building-a-flow',
         },
         {
-          text: 'TODO: The Viewport',
-          link: '/core-concepts/building-a-flow',
+          text: 'The Canvas',
+          link: '/core-concepts/the-canvas',
         },
         {
           text: 'TODO: Built-In Components',
