@@ -1,0 +1,144 @@
+import Demo from '../../components/demo.tsx'
+
+# Nodes Customization
+Luke Flow Diagram allows you to customize the appearance of nodes in your diagram.
+You can define your nodes using any widget via the `nodeBuilder` property on `LukeFlowCanvas`.
+We also provide example nodes to help you get started quickly.
+
+
+## Custom Widgets for Nodes
+You can use any widget to represent a node in your diagram.
+This allows you to create complex and interactive nodes that fit your application's design.
+## Example Usage
+:::code-group
+
+<div data-title="Preview" style={{width: '100%',}}>
+<Demo url='/adding-nodes' />
+</div>
+
+```dart [</>]
+LukeFlowCanvas(
+    controller: controller,
+    nodeBuilder: (node) {
+        return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.black,
+            child: Padding(
+            padding: EdgeInsetsGeometry.all(15),
+            child: Column(
+                children: [
+                Text(
+                    "🤓",
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                ),
+                Text(
+                    "This is a node",
+                    style: TextStyle(color: Colors.white),
+                ),
+                ],
+            ),
+            ),
+        ),
+        );
+    },
+)
+```
+:::
+As you can see in the example above, the canvas grid is highly customizable and can be adapted to various use cases.
+
+## Dynamically changing Node Appearance
+You can also dynamically change the appearance of nodes based on their state or data.
+This allows you to create interactive diagrams where nodes can change their appearance based on user interactions or data changes.
+For example, you can change the color of a node when it is connected to another node.
+
+## Example
+
+Connect one node to another to see magic happen!
+:::code-group
+
+<div data-title="Preview" style={{width: '100%',}}>
+<Demo url='/dynamic-nodes' />
+</div>
+
+```dart [</>]
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+
+class DynamicNodes extends StatefulWidget {
+  const DynamicNodes({super.key});
+
+  @override
+  State<DynamicNodes> createState() => _DynamicNodesState();
+}
+
+class _DynamicNodesState extends State<DynamicNodes> {
+  final controller = LukeFlowCanvasController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      addNode();
+    });
+  }
+
+  void addNode() {
+    final centerPosition = controller.viewController.viewportCenter;
+    if (centerPosition != null) {
+      controller.addNodes([
+        NodeModel(position: Vector2.fromOffset(centerPosition)),
+        NodeModel(
+          position: Vector2.fromOffset(centerPosition).add(Vector2(100, -120)),
+        ),
+      ]);
+      controller.viewController.center();
+    }
+  }
+
+  bool isNodeConnceted(NodeModel node) { // [!code hl]
+    // Check if the node has any connections  // [!code hl]
+    return controller.connections.where((connection) {  // [!code hl]
+      return connection.source.nodeId == node.id;  // [!code hl]
+    }).isNotEmpty;  // [!code hl]
+  }  // [!code hl]
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: LukeFlowCanvas(
+        controller: controller,
+        nodeBuilder: (node) {
+          final isConnceted = isNodeConnceted(node);  // [!code hl]
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(8),
+              color: isConnceted ? Colors.amber : Colors.black,  // [!code hl]
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(10),
+                child: Column(
+                  children: [
+                    Text(
+                      "This is a node",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    if (isConnceted)   // [!code hl]
+                      Text(
+                        "This node is connected!!",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+:::

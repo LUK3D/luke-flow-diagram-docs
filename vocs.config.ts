@@ -31,52 +31,52 @@ export default defineConfig({
       ],
     },
     {
-      text: 'Customization',
+      text: 'Customizations',
       collapsed: false,
       items: [
         {
-          text: 'TODO: Nodes',
-          link: '/core-concepts/overview',
+          text: 'Nodes',
+          link: '/customizations/nodes',
         },
         {
-          text: 'TODO: Sockets',
-          link: '/core-concepts/building-a-flow',
+          text: 'Sockets',
+          link: '/customizations/sockets',
         },
         {
-          text: 'TODO: Connections',
-          link: '/core-concepts/building-a-flow',
+          text: 'Connection Edges',
+          link: '/customizations/connections',
         },
         {
-          text: 'TODO: Background Grid',
-          link: '/core-concepts/building-a-flow',
+          text: 'Background Grid',
+          link: '/customizations/background-grid',
         },
       ],
     },
     {
       text: 'Examples',
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           text: 'TODO: Slideshow App',
-          link: '/core-concepts/overview',
+          link: '/examples/slideshow-app',
         },
         {
           text: 'TODO: Readonly',
-          link: '/core-concepts/building-a-flow',
+          link: '/examples/readonly',
         },
         {
           text: 'TODO: Vertical Flow',
-          link: '/core-concepts/building-a-flow',
+          link: '/examples/vertical-flow',
         },
         {
           text: 'TODO: Reroute',
-          link: '/core-concepts/building-a-flow',
+          link: '/examples/reroute',
         },
       ],
     },
     {
-      text: 'TODO: API Reference',
-      link: '/api-reference',
+      text: 'API Reference',
+      link: 'https://pub.dev/documentation/luke_flow_diagram/latest',
     },
     {
       text: 'Demo',

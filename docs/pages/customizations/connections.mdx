@@ -1,0 +1,133 @@
+import Demo from '../../components/demo.tsx'
+
+# Connection Edges Customization
+Luke Flow Diagram comes with 2 set of connection edges:
+
+### LukeEdgePainter
+- `LukeEdgePainter` is simpler but still provides a good level of customization.
+It draws curved edges just like a bezier courve and can be extended to create move complex Edges.
+
+### LukeStepEdgePainter
+- `LukeStepEdgePainter` is an extension of `LukeEdgePainter` and is the default edge painter that draws edges if you don't provide a custom one.
+This is the most customizable edge painter and has many properties that can be adjusted to fit your projects needs.
+
+
+## Custom Edges
+You can fully customize the appearance of edges using the `edgeBuilder` property on `LukeFlowCanvas`.
+This property expects a function that returns a `LukeEdgePainter`. You can build your own edge painter by extending `LukeEdgePainter` or by using the ones that comes with the package.
+
+
+## Example Usage
+See the example below to understand how to customize the edges in your diagram.
+
+:::tip
+
+Create a connection from one node to another and then do it in reverse.
+:::
+
+
+:::code-group
+
+<div data-title="Preview" style={{width: '100%',}}>
+<Demo url='/connections' />
+</div>
+
+```dart [</>]
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+import 'package:luke_flow_diagram/widgets/edges/bezier.dart';
+import 'package:luke_flow_diagram/widgets/edges/step.dart';
+
+class Connections extends StatefulWidget {
+  const Connections({super.key});
+
+  @override
+  State<Connections> createState() => _ConnectionsState();
+}
+
+class _ConnectionsState extends State<Connections> {
+  final controller = LukeFlowCanvasController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      addNode();
+    });
+  }
+
+  void addNode() {
+    final centerPosition = controller.viewController.viewportCenter;
+    if (centerPosition != null) {
+      controller.addNodes([
+        NodeModel(
+          position: Vector2.fromOffset(centerPosition).add(Vector2(100, 100)),
+        ),
+        NodeModel(
+          position: Vector2.fromOffset(centerPosition).add(Vector2(-300, -200)),
+        ),
+      ]);
+      controller.viewController.center();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: LukeFlowCanvas(
+        nodeBuilder: (node) {
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(15),
+                child: Column(
+                  children: [
+                    Text(
+                      "🤓",
+                      style: TextStyle(color: Colors.white, fontSize: 40),
+                    ),
+                    Text(
+                      "An awesome Node",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        controller: controller,
+        edgeBuilder: (source, target, edgeConnection) { // [!code hl]
+          if (edgeConnection.source.type == NodeSocketType.input) { // [!code hl]
+            return LukeEdgePainter( // [!code hl]
+              source: source, // [!code hl]
+              target: target, // [!code hl]
+              isDashed: true, // [!code hl]
+              color: Colors.blue, // [!code hl]
+              strokeWidth: 4, // [!code hl]
+            ); // [!code hl]
+          } // [!code hl]
+          
+          return LukeStepEdgePainter( // [!code hl]
+            source: source, // [!code hl]
+            target: target, // [!code hl]
+            isDashed: true, // [!code hl]
+            color: Colors.amber, // [!code hl]
+            strokeWidth: 6, // [!code hl]
+            cornerRadius: 40, // [!code hl]
+            dashOffset: 1, // [!code hl]
+            dashSpace: 12, // [!code hl]
+          );
+        },
+      ),
+    );
+  }
+}
+
+```
+:::
+As you can see in the example above, you can use any widget as a socket, allowing for complete customization of the socket's appearance.

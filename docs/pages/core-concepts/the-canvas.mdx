@@ -5,122 +5,14 @@ import Demo from '../../components/demo.tsx'
 Luke Flow Diagram provides a powerful canvas for building interactive diagrams.
 The canvas is the central area where nodes and connections are displayed, allowing users to visualize and interact with their data.
 
-## Background Grid Settings
 
-The canvas can be customized to fit your application's needs.
+You can interact with canvas by using your mouse or touch gestures.
+Use the mouse wheel to zoom in and out, and click and drag to pan around the canvas.
+You can also use touch gestures on mobile devices to achieve the same effect.
 
-User `BackgroundGridSettings` to control the appearance of the background grid, including density, visibility of lines and dots, and colors.
-
-```dart
-BackgroundGridSettings(
-    xDensity: 50,
-    yDensity: 50,
-    showDots: true,
-    lineColor: const Color.fromARGB(82, 0, 0, 0),
-    lineWidth: 2,
-    dotColor: const Color.fromARGB(255, 0, 0, 0),
-    dotRadius: 2,
-    showLines: true,
-)
-```
-If you don't provide any `BackgroundGridSettings`, the canvas will not display a background grid with the default settings.
-## Example Usage
-:::code-group
+> On mobile devices, there is a bug where you cant connect nodes by dragging from one socket to another.
+> This is a known issue and will be fixed in the next release.
 
 <div data-title="Preview" style={{width: '100%',}}>
-<Demo url='/custom-canvas' />
+<Demo url='/' />
 </div>
-
-```dart [</>]
-LukeFlowCanvas(
-    bacgrkoundGridSettings: BackgroundGridSettings( // [!code focus]
-        xDensity: 50,   // [!code focus]
-        yDensity: 50,   // [!code focus]
-        showDots: true, // [!code focus]
-        lineColor: const Color.fromARGB(82, 0, 0, 0),   // [!code focus]
-        lineWidth: 2,   // [!code focus]
-        dotColor: const Color.fromARGB(255, 0, 0, 0),   // [!code focus]
-        dotRadius: 2,   // [!code focus]
-        showLines: true,    // [!code focus]
-    ),
-    controller: controller,
-    nodeBuilder: (node) {
-        return Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Material(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.black,
-            child: Padding(
-            padding: EdgeInsetsGeometry.all(10),
-            child: Row(
-                children: [
-                Text(
-                    "This is a node",
-                    style: TextStyle(color: Colors.white),
-                ),
-                ],
-            ),
-            ),
-        ));
-    },
-)
-
-```
-:::
-As you can see in the example above, the canvas is highly customizable and can be adapted to various use cases.
-
-## Background Grid with Secondary Settings
-You can also provide a secondary background grid with different settings. This can be useful for creating a more complex visual structure.
-
-## Example
-:::code-group
-
-<div data-title="Preview" style={{width: '100%',}}>
-<Demo url='/custom-canvas-2' />
-</div>
-
-```dart [</>]
-LukeFlowCanvas(
-    bacgrkoundGridSettings: BackgroundGridSettings(
-        xDensity: 50,
-        yDensity: 50,
-        showDots: true,
-        lineColor: const Color.fromARGB(82, 0, 0, 0),
-        lineWidth: 2,
-        dotColor: const Color.fromARGB(255, 0, 0, 0),
-        dotRadius: 2,
-        showLines: true,
-    ),
-    secondaryBacgrkoundGridSettings: BackgroundGridSettings( // [!code ++]
-        xDensity: 20, // [!code ++]
-        yDensity: 20, // [!code ++]
-        lineColor: const Color.fromARGB(51, 0, 0, 0), // [!code ++]
-        lineWidth: 1, // [!code ++]
-        showLines: true, // [!code ++]
-    ), // [!code ++]
-    controller: controller,
-    nodeBuilder: (node) {
-        return Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Material(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.black,
-            child: Padding(
-            padding: EdgeInsetsGeometry.all(10),
-            child: Row(
-                children: [
-                Text(
-                    "This is a node",
-                    style: TextStyle(color: Colors.white),
-                ),
-                ],
-            ),
-            ),
-        ),
-        );
-    },
-    ),
-);
-
-```
-:::

@@ -1,0 +1,145 @@
+import Demo from '../../components/demo.tsx'
+
+# Sockets Customization
+Sockets (also known as ports) are points on a node where connections can attach.
+You can customize the appearance of the node's sockets in your diagram.
+
+## Custom Sockets
+You can fully customize the appearance and positioning of sockets using the `socketBuilder` property on `LukeFlowCanvas`.
+
+:::note[Key is required]
+
+The `key` property is required for the socket.
+This is used to track the socket's position in the canvas.
+Make sure to use `controller.getOrCreateSocketKey(socket.id)` to get the key for
+
+:::
+
+```dart 
+
+LukeFlowCanvas(
+  controller: controller,
+  socketBuilder: (node, socket) { // [!code hl]
+    return Container( // [!code hl]
+      // Don't forget to use the key for the socket
+      key: controller.getOrCreateSocketKey(socket.id), // [!code hl]
+      decoration: BoxDecoration( // [!code hl]
+        color: Colors.blue, // [!code hl]
+        shape: BoxShape.circle, // [!code hl]
+      ), // [!code hl]
+      child: Center( // [!code hl]
+        child: Text( // [!code hl]
+          socket.type == NodeSocketType.input ? 'IN' : 'OUT', // [!code hl]
+          style: TextStyle( // [!code hl]
+            color: Colors.white, // [!code hl]
+            fontWeight: FontWeight.bold, // [!code hl]
+          ), // [!code hl]
+        ), // [!code hl]
+      ), // [!code hl]
+    ); // [!code hl]
+  }, // [!code hl]
+);
+```
+
+## Example Usage
+See the example below to understand how to customize sockets in your diagram.
+:::code-group
+
+<div data-title="Preview" style={{width: '100%',}}>
+<Demo url='/custom-sockets' />
+</div>
+
+```dart [</>]
+import 'package:flutter/material.dart';
+import 'package:luke_flow_diagram/luke_flow_diagram.dart';
+
+class CustomSockets extends StatefulWidget {
+  const CustomSockets({super.key});
+
+  @override
+  State<CustomSockets> createState() => _CustomSocketsState();
+}
+
+class _CustomSocketsState extends State<CustomSockets> {
+  final controller = LukeFlowCanvasController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      addNode();
+    });
+  }
+
+  void addNode() {
+    final centerPosition = controller.viewController.viewportCenter;
+    if (centerPosition != null) {
+      controller.addNodes([
+        NodeModel(
+          position: Vector2.fromOffset(centerPosition).add(Vector2(100, -100)),
+        ),
+        NodeModel(
+          position: Vector2.fromOffset(centerPosition).add(Vector2(-300, -100)),
+        ),
+      ]);
+      controller.viewController.center();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: LukeFlowCanvas(
+        socketHeight: 50,
+        socketWidth: 50,
+        socketBuilder: (node, socket) { // [!code hl]
+          return Container( // [!code hl]
+            key: controller.getOrCreateSocketKey(socket.id), // [!code hl]
+            decoration: BoxDecoration( // [!code hl]
+              color: Colors.blue, // [!code hl]
+              shape: BoxShape.circle, // [!code hl]
+            ), // [!code hl]
+            child: Center( // [!code hl]
+              child: Text( // [!code hl]
+                socket.type == NodeSocketType.input ? 'IN' : 'OUT', // [!code hl]
+                style: TextStyle( // [!code hl]
+                  color: Colors.white, // [!code hl]
+                  fontWeight: FontWeight.bold, // [!code hl]
+                ), // [!code hl]
+              ), // [!code hl]
+            ), // [!code hl]
+          ); // [!code hl]
+        }, // [!code hl]
+        nodeBuilder: (node) {
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(15),
+                child: Column(
+                  children: [
+                    Text(
+                      "🤓",
+                      style: TextStyle(color: Colors.white, fontSize: 40),
+                    ),
+                    Text(
+                      "This is a node",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        controller: controller,
+      ),
+    );
+  }
+}
+```
+:::
+As you can see in the example above, you can use any widget as a socket, allowing for complete customization of the socket's appearance.
