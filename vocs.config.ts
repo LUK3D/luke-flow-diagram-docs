@@ -24,10 +24,6 @@ export default defineConfig({
           text: 'The Canvas',
           link: '/core-concepts/the-canvas',
         },
-        {
-          text: 'TODO: Built-In Components',
-          link: '/core-concepts/building-a-flow',
-        },
       ],
     },
     {
@@ -54,24 +50,12 @@ export default defineConfig({
     },
     {
       text: 'Examples',
-      collapsed: true,
+      collapsed: false,
       items: [
         {
-          text: 'TODO: Slideshow App',
-          link: '/examples/slideshow-app',
-        },
-        {
-          text: 'TODO: Readonly',
-          link: '/examples/readonly',
-        },
-        {
-          text: 'TODO: Vertical Flow',
-          link: '/examples/vertical-flow',
-        },
-        {
-          text: 'TODO: Reroute',
-          link: '/examples/reroute',
-        },
+          text: 'Animated Edges',
+          link: '/examples/animated-edges',
+        }
       ],
     },
     {
